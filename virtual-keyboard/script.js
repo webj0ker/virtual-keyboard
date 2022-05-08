@@ -70,7 +70,7 @@ window.onload = () => {
       {code: 'ArrowRight', en: '→', enShift: '→', ru: '→', ruShift: '→'},
       {code: 'ControlRight', specKey: true, name: 'Ctrl'}
     ];
-  
+          
     h1 = document.createElement('h1');
     h1.innerHTML = 'Виртуальная клавиатура';
     document.body.append(h1);
@@ -85,7 +85,7 @@ window.onload = () => {
   
     let addKeysDom = function (objKey) {
       let key = document.createElement('div');
-      key.className = objKey.code.toLowerCase();
+      key.className = objKey.code;
       key.innerText = objKey.en || objKey.name || objKey.code;
       return document.getElementById('keyboard').append(key);
     }
@@ -93,5 +93,41 @@ window.onload = () => {
     keys.forEach(objKey => addKeysDom(objKey));
   
   
+    class Button {
+  
+      constructor(name) {
+        this.name = name;
+      }
+  
+      perebor(name) {
+        return keys.forEach(objKey => objKey.name);
+      }
+  
+  
+      write(key) {
+        
+        return document.getElementById('textarea').append(key);
+      }
+  
+      pressing() {
+        if (event.target.className === this.perebor(code)){
+            this.write()
+        }
+       
+      }
+    
+    }
+    
+    let button = new Button();
+  
+  
+   document.getElementById('keyboard').addEventListener("click", (event) => {
+     button.pressing();
+    });
+  
+  
+  document.addEventListener('keydown', (event) => {
+      console.log(event.code);
+  });
   
   }
