@@ -85,5 +85,6 @@ h1 {
     background-color:rgb(19, 129, 129);
     color: #fff;
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
 }
 
