@@ -106,9 +106,8 @@ window.onload = () => {
         
       }
     
-       pushKey (event) {
+      pushKey (event) {
         let localObjKey = {}
-        console.log
         keys.forEach(function (obj) {
          
           if (obj.code === event.code ) {
@@ -128,31 +127,25 @@ window.onload = () => {
         if(!localObjKey.specKey && event.type === 'keyup') {
           document.getElementById('textarea').append(localObjKey.en);
         } 
-    
-    
       }
+  
+      mouseClick(event) {
+      
+        keys.forEach(function (obj) {
+         
+          if(event.target.className === obj.code && !obj.specKey){
+            document.getElementById('textarea').append(obj.en);
+          }
+        });
+      }
+  
     }
     
     let button = new Button(keys);
   
-  
-    function mouseClicks(event) {
-      
-      keys.forEach(function (obj) {
-       
-        if(event.target.className === obj.code && !obj.specKey){
-          document.getElementById('textarea').append(obj.en);
-        }
-      });
-    }
-  
-  
-  
-  
    document.getElementById('keyboard').addEventListener("click", (event) => {
-    mouseClicks(event);
+    button.mouseClick(event);
   });
-  
   
   document.addEventListener('keydown', (event) => { 
     button.pushKey(event);
