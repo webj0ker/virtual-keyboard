@@ -1,0 +1,72 @@
+* {
+    box-sizing: border-box;
+}
+
+.keyboard {
+    max-width: 706px;
+    border: solid 1px #333;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    background-color: rgb(165, 159, 159);
+}
+
+.keyboard .key {
+    /* border: 1px solid #033; */
+    background-color: #fff;
+    min-width: 40px;
+    min-height: 40px;
+    margin: 4px 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: monospace;
+}
+
+.backspace {
+    width: 100px;
+}
+
+.tab {
+    width: 50px;
+}
+
+.del {
+    width: 44px;
+}
+
+.capslock {
+    width: 100px;
+}
+
+.enter {
+    width: 86px;
+}
+
+.shiftleft {
+    width: 100px;
+}
+
+.shiftright {
+    width: 86px;
+}
+
+/* .ctrl {
+} */
+
+.space {
+    width: 330px;
+}
+
+.key:hover {
+    /* border-radius: 50px; */
+    background-color: cornflowerblue;
+    cursor: pointer;
+}
+
+.key:active {
+    border-radius: 50px;
+    background-color:rgb(19, 129, 129);
+    color: #fff;
+    cursor: pointer;
+}
