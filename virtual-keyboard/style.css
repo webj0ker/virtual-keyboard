@@ -18,7 +18,7 @@ h1 {
 }
 
 #keyboard {
-    max-width: 706px;
+    width: 706px;
     border: solid 1px #333;
     display: flex;
     flex-wrap: wrap;
@@ -46,7 +46,7 @@ h1 {
     width: 50px;
 }
 
-.Del {
+.Delete {
     width: 44px;
 }
 
@@ -80,7 +80,7 @@ h1 {
     cursor: pointer;
 }
 
-#keyboard div:active {
+#keyboard div:active, #keyboard .active  {
     border-radius: 50px;
     background-color:rgb(19, 129, 129);
     color: #fff;

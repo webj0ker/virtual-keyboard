@@ -30,7 +30,7 @@ window.onload = () => {
       {code: 'BracketLeft', en: '[', enShift: '{', ru: 'х', ruShift: 'Х'},
       {code: 'BracketRight', en: ']', enShift: '}', ru: 'ъ', ruShift: 'Ъ'},
       {code: 'Backslash', en: '\\', enShift: '|', ru: '\\', ruShift: '/'},
-      {code: 'Del', specKey: true },
+      {code: 'Delete', specKey: true, name: 'Del' },
   
       {code: 'CapsLock', specKey: true },  
       {code: 'KeyA', en: 'a', enShift: 'A', ru: 'ф', ruShift: 'Ф'},
@@ -77,6 +77,7 @@ window.onload = () => {
   
     let textarea = document.createElement('textarea');
     textarea.id = 'textarea';
+    textarea.autofocus = true;
     document.body.append(textarea);
   
     let keyboard = document.createElement('div');
@@ -95,39 +96,70 @@ window.onload = () => {
   
     class Button {
   
-      constructor(name) {
-        this.name = name;
-      }
-  
-      perebor(name) {
-        return keys.forEach(objKey => objKey.name);
-      }
-  
-  
-      write(key) {
+      constructor(options) {
         
-        return document.getElementById('textarea').append(key);
-      }
-  
-      pressing() {
-        if (event.target.className === this.perebor(code)){
-            this.write()
-        }
-       
+        this.code = options.code;
+        this.en = options.en;
+        this.enShift = options.enShift;
+        this.ru = options.ru;
+        this.ruShift = options.ruShift;
+        
       }
     
+       pushKey (event) {
+        let localObjKey = {}
+        console.log
+        keys.forEach(function (obj) {
+         
+          if (obj.code === event.code ) {
+            let btn = document.querySelector(`.${obj.code}`);
+            localObjKey = obj;
+    
+            if (event.type === 'keydown') {
+              btn.classList.add('active');
+            } 
+            
+            if (event.type === 'keyup') {
+              btn.classList.remove('active');
+            }
+          }
+        });
+        
+        if(!localObjKey.specKey && event.type === 'keyup') {
+          document.getElementById('textarea').append(localObjKey.en);
+        } 
+    
+    
+      }
     }
     
-    let button = new Button();
+    let button = new Button(keys);
+  
+  
+    function mouseClicks(event) {
+      
+      keys.forEach(function (obj) {
+       
+        if(event.target.className === obj.code && !obj.specKey){
+          document.getElementById('textarea').append(obj.en);
+        }
+      });
+    }
+  
+  
   
   
    document.getElementById('keyboard').addEventListener("click", (event) => {
-     button.pressing();
-    });
+    mouseClicks(event);
+  });
   
   
-  document.addEventListener('keydown', (event) => {
-      console.log(event.code);
+  document.addEventListener('keydown', (event) => { 
+    button.pushKey(event);
+  });
+  
+  document.addEventListener('keyup', (event) => { 
+    button.pushKey(event);
   });
   
   }
