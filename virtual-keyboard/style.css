@@ -2,7 +2,22 @@
     box-sizing: border-box;
 }
 
-.keyboard {
+
+h1 {
+    color: #055;
+    text-align: center;
+}
+
+#textarea {
+    width: 706px;
+    height: 250px;
+    border: solid 1px #333;
+    display: flex;
+    margin: 0 auto;
+    
+}
+
+#keyboard {
     max-width: 706px;
     border: solid 1px #333;
     display: flex;
@@ -11,7 +26,7 @@
     background-color: rgb(165, 159, 159);
 }
 
-.keyboard .key {
+#keyboard div {
     /* border: 1px solid #033; */
     background-color: #fff;
     min-width: 40px;
@@ -58,13 +73,13 @@
     width: 330px;
 }
 
-.key:hover {
+#keyboard div:hover {
     /* border-radius: 50px; */
     background-color: cornflowerblue;
     cursor: pointer;
 }
 
-.key:active {
+#keyboard div:active {
     border-radius: 50px;
     background-color:rgb(19, 129, 129);
     color: #fff;
