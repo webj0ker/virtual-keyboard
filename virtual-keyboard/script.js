@@ -14,9 +14,9 @@ window.onload = () => {
       {code: 'Digit0', en: '0', enShift: ')', ru: '0', ruShift: ')'},
       {code: 'Minus', en: '-', enShift: '_', ru: '-', ruShift: '_'},
       {code: 'Equal', en: '=', enShift: '+', ru: '=', ruShift: '+'},
-      {code: 'Backspace', specKey: true},
+      {code: 'Backspace', specKey: true, codefunc: function(){console.log(value.length)}},
   
-      {code: 'Tab', specKey: true},  
+      {code: 'Tab', specKey: true, codeHtml: '\t'},  
       {code: 'KeyQ', en: 'q', enShift: 'Q', ru: 'й', ruShift: 'Й'},
       {code: 'KeyW', en: 'w', enShift: 'W', ru: 'ц', ruShift: 'Ц'},
       {code: 'KeyE', en: 'e', enShift: 'E', ru: 'у', ruShift: 'У'},
@@ -44,7 +44,7 @@ window.onload = () => {
       {code: 'KeyL', en: 'l', enShift: 'L', ru: 'д', ruShift: 'Д'},
       {code: 'Semicolon', en: ';', enShift: ':', ru: 'ж', ruShift: 'Ж'},
       {code: 'Quote', en: "'", enShift: '"', ru: 'э', ruShift: 'Э'},
-      {code: 'Enter', specKey: true},
+      {code: 'Enter', specKey: true, codeHtml: '\r'},
   
       {code: 'ShiftLeft', specKey: true, name: 'Shift'},
       {code: 'KeyZ', en: 'z', enShift: 'Z', ru: 'я', ruShift: 'Я'},
@@ -63,7 +63,7 @@ window.onload = () => {
       {code: 'ControlLeft', specKey: true, name: 'Ctrl'},
       {code: 'MetaLeft', specKey: true, name: 'Win'},
       {code: 'AltLeft', specKey: true, name: 'Alt'},
-      {code: 'Space', specKey: true},
+      {code: 'Space', specKey: true, codeHtml: ' '},
       {code: 'AltRight', specKey: true, name: 'Alt'},
       {code: 'ArrowLeft', en: '←', enShift: '←', ru: '←', ruShift: '←'},
       {code: 'ArrowDown', en: '↓', enShift: '↓', ru: '↓', ruShift: '↓'},
@@ -92,10 +92,9 @@ window.onload = () => {
     }
   
     keys.forEach(objKey => addKeysDom(objKey));
-  
-  
     class Button {
-  
+      textarea = document.getElementById('textarea');
+      
       constructor(options) {
         
         this.code = options.code;
@@ -103,9 +102,8 @@ window.onload = () => {
         this.enShift = options.enShift;
         this.ru = options.ru;
         this.ruShift = options.ruShift;
-        
       }
-    
+
       pushKey (event) {
         let localObjKey = {}
         keys.forEach(function (obj) {
@@ -124,21 +122,45 @@ window.onload = () => {
           }
         });
         
-        if(!localObjKey.specKey && event.type === 'keyup') {
-          document.getElementById('textarea').append(localObjKey.en);
+        if( event.type === 'keyup' ) {
+
+          if(!localObjKey.codefunc) {
+            if(textarea.selectionStart != undefined){
+
+              let carriage = textarea.selectionStart;
+              textarea.value = textarea.value.substring(0, textarea.selectionStart) + (localObjKey.codeHtml || localObjKey.en) + textarea.value.substring(textarea.selectionEnd, textarea.value.length);
+              textarea.selectionStart = carriage+localObjKey.en.length;
+              textarea.selectionEnd = textarea.selectionStart;
+            } else {
+              textarea.value += (localObjKey.codeHtml || localObjKey.en)
+            };
+          }
+  
         } 
+        
       }
   
       mouseClick(event) {
       
         keys.forEach(function (obj) {
          
-          if(event.target.className === obj.code && !obj.specKey){
-            document.getElementById('textarea').append(obj.en);
+          if(event.target.className === obj.code && !obj.codefunc) {
+
+            if(textarea.selectionStart != undefined){
+
+              let carriage = textarea.selectionStart;
+              textarea.value = textarea.value.substring(0, textarea.selectionStart) + (obj.codeHtml || obj.en) + textarea.value.substring(textarea.selectionEnd, textarea.value.length);
+              textarea.selectionStart = carriage + obj.en.length;
+              textarea.selectionEnd = textarea.selectionStart;
+            }else {
+             textarea.value += (obj.codeHtml || obj.en)
+            };
+
           }
         });
+ 
       }
-  
+
     }
     
     let button = new Button(keys);
