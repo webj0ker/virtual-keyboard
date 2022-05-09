@@ -63,7 +63,7 @@ window.onload = () => {
       {code: 'ControlLeft', specKey: true, name: 'Ctrl'},
       {code: 'MetaLeft', specKey: true, name: 'Win'},
       {code: 'AltLeft', specKey: true, name: 'Alt'},
-      {code: 'Space', specKey: true, codeHtml: ' '},
+      {code: 'Space',  specKey: true, codeHtml: ' '},
       {code: 'AltRight', specKey: true, name: 'Alt'},
       {code: 'ArrowLeft', en: '←', enShift: '←', ru: '←', ruShift: '←'},
       {code: 'ArrowDown', en: '↓', enShift: '↓', ru: '↓', ruShift: '↓'},
@@ -152,7 +152,7 @@ window.onload = () => {
               textarea.value = textarea.value.substring(0, textarea.selectionStart) + (obj.codeHtml || obj.en) + textarea.value.substring(textarea.selectionEnd, textarea.value.length);
               textarea.selectionStart = carriage + obj.en.length;
               textarea.selectionEnd = textarea.selectionStart;
-            }else {
+            } else {
              textarea.value += (obj.codeHtml || obj.en)
             };
 
