@@ -30,7 +30,7 @@ window.onload = () => {
       {code: 'BracketLeft', en: '[', enShift: '{', ru: 'х', ruShift: 'Х'},
       {code: 'BracketRight', en: ']', enShift: '}', ru: 'ъ', ruShift: 'Ъ'},
       {code: 'Backslash', en: '\\', enShift: '|', ru: '\\', ruShift: '/'},
-      {code: 'Delete', specKey: true, name: 'Del' },
+      {code: 'Delete', en: '', enShift: '', ru: '', ruShift: '', specKey: true, name: 'Del' },
   
       {code: 'CapsLock', specKey: true, en: '', enShift: '', ru: '', ruShift: '' },  
       {code: 'KeyA', en: 'a', enShift: 'A', ru: 'ф', ruShift: 'Ф'},
@@ -46,7 +46,7 @@ window.onload = () => {
       {code: 'Quote', en: "'", enShift: '"', ru: 'э', ruShift: 'Э'},
       {code: 'Enter', en: 'Enter', enShift: 'Enter', ru: 'Enter', ruShift: 'Enter', name: 'Enter', specKey: true, codeHtml: '\r'},
   
-      {code: 'ShiftLeft', specKey: true, name: 'Shift'},
+      {code: 'ShiftLeft', en: '', enShift: '', ru: '', ruShift: '', specKey: true, name: 'Shift'},
       {code: 'KeyZ', en: 'z', enShift: 'Z', ru: 'я', ruShift: 'Я'},
       {code: 'KeyX', en: 'x', enShift: 'X', ru: 'ч', ruShift: 'Ч'},
       {code: 'KeyC', en: 'c', enShift: 'C', ru: 'с', ruShift: 'С'},
@@ -189,6 +189,25 @@ window.onload = () => {
       
       keys.forEach(objKey => addKeysDom(objKey, localStorage.lang));
 
+    }
+
+    if(event.code === 'Backspace') {
+     
+      if(textarea.selectionStart) {
+        let caretka = textarea.selectionStart-1
+        textarea.value = textarea.value.replace(textarea.value.slice(textarea.selectionStart-1, textarea.selectionEnd), '');
+        textarea.selectionStart = caretka
+        textarea.selectionEnd = caretka
+      }
+      
+    }
+    if(event.code === 'Delete') {
+     
+        let caretka = textarea.selectionStart
+        textarea.value = textarea.value.replace(textarea.value.slice(textarea.selectionStart, textarea.selectionStart+1), '');
+        textarea.selectionStart = caretka
+        textarea.selectionEnd = caretka
+     
     }
 
     // let caps = false;
