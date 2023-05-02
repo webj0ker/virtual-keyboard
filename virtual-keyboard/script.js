@@ -32,7 +32,7 @@ window.onload = () => {
       {code: 'Backslash', en: '\\', enShift: '|', ru: '\\', ruShift: '/'},
       {code: 'Delete', specKey: true, name: 'Del' },
   
-      {code: 'CapsLock', specKey: true },  
+      {code: 'CapsLock', specKey: true, en: '', enShift: '', ru: '', ruShift: '' },  
       {code: 'KeyA', en: 'a', enShift: 'A', ru: 'ф', ruShift: 'Ф'},
       {code: 'KeyS', en: 's', enShift: 'S', ru: 'ы', ruShift: 'Ы'},
       {code: 'KeyD', en: 'd', enShift: 'D', ru: 'в', ruShift: 'В'},
@@ -44,7 +44,7 @@ window.onload = () => {
       {code: 'KeyL', en: 'l', enShift: 'L', ru: 'д', ruShift: 'Д'},
       {code: 'Semicolon', en: ';', enShift: ':', ru: 'ж', ruShift: 'Ж'},
       {code: 'Quote', en: "'", enShift: '"', ru: 'э', ruShift: 'Э'},
-      {code: 'Enter', specKey: true, codeHtml: '\r'},
+      {code: 'Enter', en: 'Enter', enShift: 'Enter', ru: 'Enter', ruShift: 'Enter', name: 'Enter', specKey: true, codeHtml: '\r'},
   
       {code: 'ShiftLeft', specKey: true, name: 'Shift'},
       {code: 'KeyZ', en: 'z', enShift: 'Z', ru: 'я', ruShift: 'Я'},
@@ -58,12 +58,12 @@ window.onload = () => {
       {code: 'Period', en: '.', enShift: '>', ru: 'ю', ruShift: 'Ю'},
       {code: 'Slash', en: '/', enShift: '?', ru: '.', ruShift: ','},
       {code: 'ArrowUp', en: '↑', enShift: '↑', ru: '↑', ruShift: '↑'},
-      {code: 'ShiftRight', specKey: true, name: 'Shift'},
+      {code: 'ShiftRight', en: '', enShift: '', ru: '', ruShift: '', specKey: true, name: 'Shift'},
   
-      {code: 'ControlLeft', specKey: true, name: 'Ctrl'},
-      {code: 'MetaLeft', specKey: true, name: 'Win'},
-      {code: 'AltLeft', specKey: true, name: 'Alt'},
-      {code: 'Space',  specKey: true, codeHtml: ' '},
+      {code: 'ControlLeft', en: '', enShift: '', ru: '', ruShift: '', specKey: true, name: 'Ctrl'},
+      {code: 'MetaLeft', en: '', enShift: '', ru: '', ruShift: '', specKey: true, name: 'Win'},
+      {code: 'AltLeft', en: '', enShift: '', ru: '', ruShift: '', specKey: true, name: 'Alt'},
+      {code: 'Space', en: ' ', enShift: ' ', ru: ' ', ruShift: ' ',  specKey: true, codeHtml: ' '},
       {code: 'AltRight', specKey: true, name: 'Alt'},
       {code: 'ArrowLeft', en: '←', enShift: '←', ru: '←', ruShift: '←'},
       {code: 'ArrowDown', en: '↓', enShift: '↓', ru: '↓', ruShift: '↓'},
@@ -83,15 +83,18 @@ window.onload = () => {
     let keyboard = document.createElement('div');
     keyboard.id = 'keyboard';
     document.body.append(keyboard);
+
+    let langLocal = localStorage.lang || localStorage.setItem('lang', 'en');
   
-    let addKeysDom = function (objKey) {
+    let addKeysDom = function (objKey, lang = localStorage.lang || 'en') {
       let key = document.createElement('div');
       key.className = objKey.code;
-      key.innerText = objKey.en || objKey.name || objKey.code;
+      key.innerText = objKey[lang] || objKey.name || objKey.code;
+      // key.innerText = objKey.en || objKey.name || objKey.code;
       return document.getElementById('keyboard').append(key);
     }
   
-    keys.forEach(objKey => addKeysDom(objKey));
+    keys.forEach(objKey => addKeysDom(objKey, langLocal));
     class Button {
       textarea = document.getElementById('textarea');
       
@@ -128,7 +131,7 @@ window.onload = () => {
             if(textarea.selectionStart != undefined){
 
               let carriage = textarea.selectionStart;
-              textarea.value = textarea.value.substring(0, textarea.selectionStart) + (localObjKey.codeHtml || localObjKey.en) + textarea.value.substring(textarea.selectionEnd, textarea.value.length);
+              textarea.value = textarea.value.substring(0, textarea.selectionStart) + (localObjKey.codeHtml || localObjKey[localStorage.lang]) + textarea.value.substring(textarea.selectionEnd, textarea.value.length);
               textarea.selectionStart = carriage+localObjKey.en.length;
               textarea.selectionEnd = textarea.selectionStart;
             } else {
@@ -149,7 +152,8 @@ window.onload = () => {
             if(textarea.selectionStart != undefined){
 
               let carriage = textarea.selectionStart;
-              textarea.value = textarea.value.substring(0, textarea.selectionStart) + (obj.codeHtml || obj.en) + textarea.value.substring(textarea.selectionEnd, textarea.value.length);
+              // textarea.value = textarea.value.substring(0, textarea.selectionStart) + (obj.codeHtml || obj.en) + textarea.value.substring(textarea.selectionEnd, textarea.value.length);
+              textarea.value = textarea.value.substring(0, textarea.selectionStart) + (obj.codeHtml || obj[localStorage.lang]) + textarea.value.substring(textarea.selectionEnd, textarea.value.length);
               textarea.selectionStart = carriage + obj.en.length;
               textarea.selectionEnd = textarea.selectionStart;
             } else {
@@ -170,11 +174,44 @@ window.onload = () => {
   });
   
   document.addEventListener('keydown', (event) => { 
+    event.preventDefault();
+    if (event.ctrlKey && event.altKey) {
+      event.preventDefault();
+     
+      keyboard.innerHTML = ''
+      
+      if(localStorage.getItem('lang') === 'en') {
+        localStorage.setItem('lang', 'ru');
+        
+      } else if (localStorage.getItem('lang') === 'ru') {
+        localStorage.setItem('lang', 'en');
+      }
+      
+      keys.forEach(objKey => addKeysDom(objKey, localStorage.lang));
+
+    }
+
+    // let caps = false;
+    // if(event.code === 'CapsLock') {
+    //   !caps
+    //   if(caps) {
+    //     keys.forEach(objKey => addKeysDom(objKey, localStorage.lang));
+    //   } else if (!caps) {
+    //     keys.forEach(objKey => addKeysDom(objKey, localStorage.lang));
+    //   }
+      
+      
+    // }
+
     button.pushKey(event);
+
+    
   });
   
   document.addEventListener('keyup', (event) => { 
+    event.preventDefault();
     button.pushKey(event);
   });
+
   
   }
