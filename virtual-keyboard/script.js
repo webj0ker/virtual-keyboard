@@ -14,7 +14,7 @@ window.onload = () => {
       {code: 'Digit0', en: '0', enShift: ')', ru: '0', ruShift: ')'},
       {code: 'Minus', en: '-', enShift: '_', ru: '-', ruShift: '_'},
       {code: 'Equal', en: '=', enShift: '+', ru: '=', ruShift: '+'},
-      {code: 'Backspace', specKey: true, codefunc: function(){console.log(value.length)}},
+      {code: 'Backspace', specKey: true, codefunc: function(){}},
   
       {code: 'Tab', specKey: true, codeHtml: '\t'},  
       {code: 'KeyQ', en: 'q', enShift: 'Q', ru: 'й', ruShift: 'Й'},
@@ -64,11 +64,11 @@ window.onload = () => {
       {code: 'MetaLeft', en: '', enShift: '', ru: '', ruShift: '', specKey: true, name: 'Win'},
       {code: 'AltLeft', en: '', enShift: '', ru: '', ruShift: '', specKey: true, name: 'Alt'},
       {code: 'Space', en: ' ', enShift: ' ', ru: ' ', ruShift: ' ',  specKey: true, codeHtml: ' '},
-      {code: 'AltRight', specKey: true, name: 'Alt'},
+      {code: 'AltRight',  en: '', enShift: '', ru: '', ruShift: '', specKey: true,  name: 'Alt'},
       {code: 'ArrowLeft', en: '←', enShift: '←', ru: '←', ruShift: '←'},
       {code: 'ArrowDown', en: '↓', enShift: '↓', ru: '↓', ruShift: '↓'},
       {code: 'ArrowRight', en: '→', enShift: '→', ru: '→', ruShift: '→'},
-      {code: 'ControlRight', specKey: true, name: 'Ctrl'}
+      {code: 'ControlRight', en: '', enShift: '', ru: '', ruShift: '', specKey: true, name: 'Ctrl'}
     ];
           
     h1 = document.createElement('h1');
@@ -83,6 +83,10 @@ window.onload = () => {
     let keyboard = document.createElement('div');
     keyboard.id = 'keyboard';
     document.body.append(keyboard);
+
+    let p = document.createElement('p');
+    p.textContent = 'Переключение языков комбинацией левых Ctrl + Alt';
+    document.body.append(p);
 
     let langLocal = localStorage.lang || localStorage.setItem('lang', 'en');
   
@@ -160,6 +164,8 @@ window.onload = () => {
              textarea.value += (obj.codeHtml || obj.en)
             };
 
+            
+
           }
         });
  
@@ -171,6 +177,30 @@ window.onload = () => {
   
    document.getElementById('keyboard').addEventListener("click", (event) => {
     button.mouseClick(event);
+
+    
+    if(event.target.classList.contains('Backspace')) {
+     
+      if(textarea.selectionStart) {
+        let caretka = textarea.selectionStart-1
+        textarea.value = textarea.value.replace(textarea.value.slice(textarea.selectionStart-1, textarea.selectionEnd), '');
+        // textarea.value = textarea.value.replace(textarea.value.slice(textarea.selectionStart-1, textarea.selecti  onEnd), '');
+        
+        textarea.selectionStart = caretka
+        textarea.selectionEnd = caretka
+      }
+      
+    }
+
+    if(event.target.classList.contains('Delete')) {
+     
+      let caretka = textarea.selectionStart
+      textarea.value = textarea.value.replace(textarea.value.slice(textarea.selectionStart, textarea.selectionStart+1), '');
+      textarea.selectionStart = caretka
+      textarea.selectionEnd = caretka
+      
+    }
+
   });
   
   document.addEventListener('keydown', (event) => { 
@@ -196,6 +226,8 @@ window.onload = () => {
       if(textarea.selectionStart) {
         let caretka = textarea.selectionStart-1
         textarea.value = textarea.value.replace(textarea.value.slice(textarea.selectionStart-1, textarea.selectionEnd), '');
+        // textarea.value = textarea.value.replace(textarea.value.slice(textarea.selectionStart-1, textarea.selecti  onEnd), '');
+        console.log(textarea.value.selectionStart)
         textarea.selectionStart = caretka
         textarea.selectionEnd = caretka
       }
