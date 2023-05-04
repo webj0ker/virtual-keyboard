@@ -1,0 +1,95 @@
+* {
+    box-sizing: border-box;
+}
+
+
+h1 {
+    color: #055;
+    text-align: center;
+}
+
+#textarea {
+    width: 706px;
+    height: 250px;
+    border: solid 1px #333;
+    display: flex;
+    margin: 0 auto;
+    
+}
+
+#keyboard {
+    width: 706px;
+    border: solid 1px #333;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    background-color: rgb(165, 159, 159);
+}
+
+#keyboard div {
+    /* border: 1px solid #033; */
+    background-color: #fff;
+    min-width: 40px;
+    min-height: 40px;
+    margin: 4px 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: monospace;
+}
+
+.Backspace {
+    width: 100px;
+}
+
+.Tab {
+    width: 50px;
+}
+
+.Delete {
+    width: 44px;
+}
+
+.CapsLock {
+    width: 100px;
+}
+
+.Enter {
+    width: 86px;
+}
+
+.ShiftLeft {
+    width: 100px;
+}
+
+.ShiftRight {
+    width: 86px;
+}
+
+/* .ctrl {
+
+} */
+
+.Space {
+    width: 330px;
+}
+
+#keyboard div:hover {
+    /* border-radius: 50px; */
+    background-color: cornflowerblue;
+    cursor: pointer;
+}
+
+#keyboard div:active, #keyboard .active  {
+    border-radius: 50px;
+    background-color:rgb(19, 129, 129);
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+p {
+    text-align: center;
+    font-size: 20px;
+}
+
