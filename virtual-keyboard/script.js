@@ -71,7 +71,7 @@ window.onload = () => {
     { code: 'ControlRight', en: '', enShift: '', ru: '', ruShift: '', specKey: true, name: 'Ctrl' }
   ];
 
-  h1 = document.createElement('h1');
+  let h1 = document.createElement('h1');
   h1.innerHTML = 'Виртуальная клавиатура';
   document.body.append(h1);
 
@@ -140,7 +140,7 @@ window.onload = () => {
             textarea.selectionEnd = textarea.selectionStart;
           } else {
             textarea.value += (localObjKey.codeHtml || localObjKey.en)
-          };
+          }
         }
 
       }
@@ -162,7 +162,7 @@ window.onload = () => {
             textarea.selectionEnd = textarea.selectionStart;
           } else {
             textarea.value += (obj.codeHtml || obj.en)
-          };
+          }
 
 
 
@@ -257,7 +257,8 @@ window.onload = () => {
 
   });
 
-  document.addEventListener('keyup', (event) => {
+  // document.addEventListener('keyup', (event) => {
+  document.addEventListener("keyup", (event) => {
     event.preventDefault();
     button.pushKey(event);
   });
